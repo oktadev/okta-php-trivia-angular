@@ -1,0 +1,52 @@
+<div class="columns">
+    <div class="column">
+    <span class="help is-info" *ngIf="isLoading">Loading...</span>
+    <span class="help is-error" *ngIf="errorMessage">{{ errorMessage }}</span>
+    <table class="table" *ngIf="!isLoading && !errorMessage">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Answers</th>
+                <th>Points</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let player of players">
+                <td>{{ player.id }}</td>
+                <td>{{ player.name }}</td>
+                <td>{{ player.answers }}</td>
+                <td>{{ player.points }}</td>
+                <td>
+                    <button class="button is-primary" [class.is-loading]="isUpdating(player.id)" (click)="rightAnswer(player.id)">Right (+1)</button>&nbsp;
+                    <button class="button is-primary" [class.is-loading]="isUpdating(player.id)" (click)="wrongAnswer(player.id)">Wrong (-1)</button>&nbsp;
+                    <button class="button is-primary" [class.is-loading]="isUpdating(player.id)" (click)="deletePlayer(player.id)">Delete Player</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <app-player-form (playerAdded)="appendPlayer($event)"></app-player-form>
+    </div>
+    <div class="column">
+        <div class="card" *ngIf="question?.question">
+          <div class="card-content">
+            <button class="button is-primary" (click)="getQuestion()">Refresh Question</button>
+            <p class="title">
+              {{ question.question }}
+            </p>
+            <p class="subtitle">
+              {{ question.category.title }}
+            </p>
+          </div>
+          <footer class="card-footer">
+            <p class="card-footer-item">
+                <span>
+                    Correct answer: {{ question.answer }}
+                </span>
+            </p>
+          </footer>
+        </div>
+    </div>
+</div>
+

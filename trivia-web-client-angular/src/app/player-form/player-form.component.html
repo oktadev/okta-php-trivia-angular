@@ -1,0 +1,7 @@
+<span class="help is-danger">{{ errors }}</span>
+<div class="field">
+    <div class="control">
+        <input class="input" #playerName (keydown)="errors = ''">
+    </div>
+</div>
+<button type="button" class="button is-primary" [class.is-loading]="isLoading" (click)="addPlayer(playerName.value)">Add Player</button>
